@@ -13,6 +13,14 @@ We were truly excited for it—so we decided to carry that dream forward in an *
 
 ---
 
+## 🆓 Forever open-source & free to play
+
+Hyatlas will **always** remain open source **and** free for players.  
+The code is licensed under **Hyatlas Open Source License 1.0** (AGPL-v3 + Non-Commercial clause).  
+See the `LICENSE` file for details.
+
+---
+
 ## 📚 Hyatlas repository overview
 
 | Repository | Purpose |
@@ -33,14 +41,6 @@ We were truly excited for it—so we decided to carry that dream forward in an *
 - **Anyone** can open issues, submit pull requests, or brainstorm ideas on Discord.  
 - The **game is always playable** – our CI/CD pipeline publishes fresh nightlies after every merge.  
 - **Self-hosted servers** receive stable updates automatically on a monthly cadence.
-
----
-
-## 🆓 Forever open-source & free to play
-
-Hyatlas will **always** remain open source **and** free for players.  
-The code is licensed under **Hyatlas Open Source License 1.0** (AGPL-v3 + Non-Commercial clause).  
-See the `LICENSE` file for details.
 
 ---
 
