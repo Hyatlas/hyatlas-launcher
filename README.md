@@ -23,14 +23,14 @@ See the `LICENSE` file for details.
 
 ## 📚 Hyatlas repository overview
 
-| Repository | Purpose |
-|------------|---------|
-| **[hyatlas-game](https://github.com/Hyatlas/hyatlas-game)** | Unity project (client + server); core gameplay and engine |
-| **hyatlas-launcher** *(this repo)* | Bootstrap installer, auto-patcher, update logic |
-| **[hyatlas-modkit](https://github.com/Hyatlas/hyatlas-modkit)** | SDK & APIs for building mods and plugins |
-| **[hyatlas-mod-examples](https://github.com/Hyatlas/hyatlas-mod-examples)** | Sample mods, smoke tests, CI templates |
-| **[hyatlas-server-toolkit](https://github.com/Hyatlas/hyatlas-server-toolkit)** | CLI to package, sign, and publish self-hosted servers |
-| **[hyatlas-docs](https://github.com/Hyatlas/hyatlas-docs)** | Documentation, contributor guide, design docs |
+| Repository                                                          | Purpose                                               |
+|---------------------------------------------------------------------|-------------------------------------------------------|
+| **[hyatlas-game](https://github.com/Hyatlas/hyatlas-game)**         | Core and engine of the Hyatlas Game                   |
+| **hyatlas-launcher (this repo)** | Windows/Apple Launcher to install the game            |
+| **[hyatlas-web](https://github.com/Hyatlas/hyatlas-web)**                                         | Verification/Website/Platform                         |
+| **[hyatlas-modkit](https://github.com/Hyatlas/hyatlas-modkit)**     | Tools for creating mods                |
+| **[hyatlas-server](https://github.com/Hyatlas/hyatlas-server)**     | Self-hosting of a Hyatlas server |
+| **[hyatlas-docs](https://github.com/Hyatlas/hyatlas-docs)**         | Documentation, contributor guide, design docs         |
 
 *(Private repos for premium assets, the marketplace backend, and DevOps infrastructure are not listed here.)*
 
