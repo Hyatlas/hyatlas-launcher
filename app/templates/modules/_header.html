@@ -1,0 +1,59 @@
+{#  Globale Top-Leiste  #}
+<header class="main-header">
+  <!-- links: Logo + Brand -->
+  <div class="brand">
+    <img src="{{ url_for('static', path='img/panda.png') }}" alt="Hyatlas" class="hdr-logo">
+    <span class="hdr-title">Hyatlas</span>
+  </div>
+
+  <!-- Mitte: Navigation -->
+  <nav class="hdr-nav">
+    <button class="nav-btn" data-act="home">ADVENTURE</button>
+    <button class="nav-btn" data-act="servers">SERVERS</button>
+    <button class="nav-btn" data-act="avatar">AVATAR</button>
+    <button class="nav-btn" data-act="settings">SETTINGS</button>
+  </nav>
+
+  <!-- rechts: Icons + Profil -->
+  <div class="user-box">
+    <!-- Glocke -->
+    <button class="icon-btn" id="btn-bell" title="Benachrichtigungen">
+      <i class="fa fa-bell"></i>
+    </button>
+
+    <!-- Freunde -->
+    <button class="icon-btn friends-btn" id="btn-friends" title="Freunde online">
+      <i class="fa fa-users"></i>
+      <span class="badge" id="friends-count">3</span>   {# Anzahl dynamisch per JS #}
+    </button>
+
+    <!-- Profilbild & Dropdown -->
+    <div class="avatar-wrapper">
+      <img src="{{ url_for('static', path='img/avatar_placeholder.png') }}"
+           alt="Profile" class="user-avatar" id="avatar-toggle">
+      <ul class="avatar-menu" id="avatar-menu">
+        <li><a href="/profile">Profil</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+/* ───────── Avatar-Dropdown ───────── */
+const avatarWrap  = document.querySelector(".avatar-wrapper");
+const avatarImg   = document.getElementById("avatar-toggle");   // <img>
+const avatarMenu  = document.getElementById("avatar-menu");
+
+/* Klick auf Avatar öffnet/schließt Menü */
+avatarImg.addEventListener("click", e=>{
+  e.stopPropagation();
+  avatarMenu.style.display = (avatarMenu.style.display === "block") ? "none" : "block";
+});
+
+/* Klick irgendwo anders → Menü zu */
+document.addEventListener("click", ()=> avatarMenu.style.display="none");
+
+/* Sicherheit: beim Resize oder Route-Wechsel Menü schließen */
+window.addEventListener("resize", ()=> avatarMenu.style.display="none");
+</script>

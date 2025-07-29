@@ -1,0 +1,115 @@
+{% extends "modules/base_core.html" %}
+{% block body_class %}server-layout{% endblock %}
+
+{% block content %}
+<div class="page-wrap">
+
+  <section class="settings-card">
+
+    <!-- ── Tab-Navigation ───────────────────────────── -->
+    <nav class="settings-tabs">
+      <button class="tab-btn active" data-tab="general"  title="General"><i class="fa fa-cog"></i></button>
+      <button class="tab-btn"        data-tab="account"  title="Account"><i class="fa fa-user"></i></button>
+      <button class="tab-btn"        data-tab="downloads" title="Downloads"><i class="fa fa-download"></i></button>
+      <button class="tab-btn"        data-tab="privacy"  title="Privacy"><i class="fa fa-shield-alt"></i></button>
+    </nav>
+
+
+    <!-- ── Panels ───────────────────────────────────── -->
+    <form id="settings-form">
+
+      <!-- General -->
+      <div class="tab-panel" id="tab-general">
+        <div class="field">
+          <label for="lang">Language</label>
+          <select id="lang" name="language">
+            <option value="en-US">English</option>
+            <option value="de-DE">Deutsch</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="chan">Update Channel</label>
+          <select id="chan" name="channel">
+            <option value="stable">Stable</option>
+            <option value="nightly">Nightly</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Account -->
+      <div class="tab-panel hidden" id="tab-account">
+        <div class="field">
+          <label>E-Mail</label>
+          <input type="email" value="player@example.com" disabled>
+        </div>
+
+        <div class="field switch-field">
+          <label>Two-Factor Auth</label>
+          <label class="switch">
+            <input type="checkbox" disabled><span class="slider"></span>
+          </label>
+          <small class="hint">Manage 2FA on your account page.</small>
+        </div>
+      </div>
+
+      <!-- Downloads -->
+      <div class="tab-panel hidden" id="tab-downloads">
+        <div class="field">
+          <label>Game Install Location</label>
+          <input type="text" value="C:\Games\Hyatlas" disabled>
+        </div>
+
+        <div class="field">
+          <label>Max Download Bandwidth</label>
+          <input type="range" min="1" max="100" value="100" disabled>
+          <small class="hint">Limiter coming soon</small>
+        </div>
+      </div>
+
+      <!-- Privacy -->
+      <div class="tab-panel hidden" id="tab-privacy">
+        <div class="field switch-field">
+          <label>Allow anonymous telemetry</label>
+          <label class="switch">
+            <input id="tele" type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <button class="btn-primary save-btn" type="submit">Save & Apply</button>
+      <p id="settings-msg" class="msg"></p>
+    </form>
+
+  </section>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+/* ------- Tab-Switching -------- */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.onclick = ()=>{
+    // Buttons
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    // Panels
+    const id = 'tab-' + btn.dataset.tab;
+    document.querySelectorAll('.tab-panel').forEach(p=>{
+      p.classList.toggle('hidden', p.id !== id);
+    });
+  };
+});
+
+/* ------- Dummy Save ----------- */
+const form = document.getElementById('settings-form');
+const msg  = document.getElementById('settings-msg');
+form.onsubmit = e=>{
+  e.preventDefault();
+  msg.textContent = "Saved (dummy).";
+};
+</script>
+<script src="{{ url_for('static', path='js/header.js') }}"></script>
+{% endblock %}

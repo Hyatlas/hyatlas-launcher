@@ -16,7 +16,7 @@ We were truly excited for it—so we decided to carry that dream forward in an *
 ## 🆓 Forever open-source & free to play
 
 Hyatlas will **always** remain open source **and** free for players.  
-The code is licensed under **Hyatlas Open Source License 1.0** (AGPL-v3 + Non-Commercial clause).  
+The code is licensed under **Hyatlas License 1.0** (AGPL-v3 + Non-Commercial clause).  
 See the `LICENSE` file for details.
 
 ---

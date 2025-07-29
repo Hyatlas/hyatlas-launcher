@@ -1,0 +1,53 @@
+{% extends "modules/base_core.html" %}
+{% block body_class %}server-layout{% endblock %}
+
+{% block content %}
+<div class="page-wrap avatar-wrap">
+
+  <!-- ◀ Tabs + Item-Gallery -->
+  <aside class="editor-pane">
+
+    <nav class="part-tabs" id="part-tabs">
+      <button data-part="head"  title="Head" ><i class="fa fa-user"></i></button>
+      <button data-part="body"  title="Body" ><i class="fa fa-tshirt"></i></button>
+      <button data-part="legs"  title="Legs"  class="active"><i class="fa fa-socks"></i></button>
+      <button data-part="feet"  title="Feet" ><i class="fa fa-shoe-prints"></i></button>
+      <button data-part="color" title="Colors"><i class="fa fa-palette"></i></button>
+    </nav>
+
+
+    <header><h2 id="part-title">Legs</h2></header>
+
+    <div class="gallery" id="gallery"><!-- items injected per JS --></div>
+
+    <div class="color-bar" id="color-bar">
+      <!-- 20 × Color-Dots via JS -->
+    </div>
+
+    <div class="editor-tools">
+      <button id="btn-undo" title="Undo"><i class="fa fa-undo"></i></button>
+      <button id="btn-redo" title="Redo"><i class="fa fa-redo"></i></button>
+      <button id="btn-opt"  title="Options"><i class="fa fa-sliders-h"></i></button>
+    </div>
+
+  </aside>
+
+  <!-- ▶ 3-D Preview -->
+  <section class="preview-pane">
+    <canvas id="avatar-canvas"></canvas>
+
+    <div class="action-row">
+      <button class="btn-secondary" id="btn-cancel">Cancel</button>
+      <button class="btn-primary"   id="btn-save"  >Save</button>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<script src="{{ url_for('static', path='js/avatar.js') }}"></script>
+<script src="{{ url_for('static', path='js/header.js') }}"></script>
+{% endblock %}

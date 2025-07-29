@@ -1,0 +1,61 @@
+<!-- app/templates/local.html -->
+{% extends "modules/base_core.html" %}
+
+{% block content %}
+  <section class="card local-card">
+    <h2>Start Local World / LAN Server</h2>
+
+    <form id="local-form">
+      <label>
+        <span>World Name</span>
+        <input name="worldName" type="text" minlength="3" maxlength="32" value="MyWorld" required />
+      </label>
+
+      <label>
+        <span>Port</span>
+        <input name="port" type="number" min="1024" max="65535" value="5151" required />
+      </label>
+
+      <label class="checkbox">
+        <input name="public" type="checkbox" />
+        <span>Publish to LAN (discoverable)</span>
+      </label>
+
+      <button class="primary" type="submit">Launch World</button>
+    </form>
+
+    <p id="local-msg" class="msg"></p>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById("local-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg  = document.getElementById("local-msg");
+  const form = e.target;
+
+  const payload = {
+    worldName: form.worldName.value.trim(),
+    port:      parseInt(form.port.value, 10),
+    public:    form.public.checked
+  };
+
+  msg.textContent = "Starting local world…";
+
+  try {
+    const res = await fetch("/api/local/start", {   // future endpoint
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("Failed to start world");
+    msg.textContent = "World running! Game launching…";
+    // TODO: call launch API when implemented
+  } catch (err) {
+    msg.textContent = err.message;
+  }
+});
+</script>
+<script src="{{ url_for('static', path='js/header.js') }}"></script>
+{% endblock %}

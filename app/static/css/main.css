@@ -1,0 +1,1592 @@
+/* ========================================================================
+   GLOBAL RESET
+   ====================================================================== */
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: sans-serif;
+  overflow-x: hidden;          /* keine horizontale Scroll-Leiste */
+}
+
+/* ───────────────────────────────────────────────────────────
+   ALTES Classic-Layout (Top-Bar + Sidebar) AUSBLENDEN
+   Falls du es später reaktivieren willst, entferne diesen Block.
+   ────────────────────────────────────────────────────────── */
+.topbar,
+.sidenav,
+.wrapper,
+.content { display: none !important; }
+
+/* ========================================================================
+   LOGIN / REGISTER
+   ====================================================================== */
+.auth-wrapper { width: 380px; margin: 0 auto; text-align: center; }
+.auth-logo    { width: 86px; margin-bottom: 1.2rem; }
+
+.auth-wrapper input,
+.btn-primary  {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.auth-wrapper input {
+  margin-bottom: 1rem;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-primary {
+  background: #204aa8;
+  color: #fff;
+  border: none;
+  margin-top: 0.3rem;
+  transition: background 0.15s;
+}
+.btn-primary:hover    { background: #16377e; }
+
+.helper, .switcher {
+  font-size: 0.88rem;
+  margin-top: 0.7rem;
+}
+.helper a, .switcher a          { color: #204aa8; text-decoration: none; }
+.helper a:hover, .switcher a:hover { text-decoration: underline; }
+
+/* ========================================================================
+   HERO LANDING  (Start-Screen)
+   ====================================================================== */
+body.hero-layout { overflow: hidden; }             /* vertikal ebenfalls fix */
+
+body.hero-layout .topbar,
+body.hero-layout .sidenav { display: none !important; }
+
+.hero-bg {
+  position: fixed; inset: 0;
+  background: url('../img/bg_forest.png') center / cover no-repeat;
+  z-index: -2;
+}
+
+.hero { height: 100vh;
+        display: flex; align-items: center; }
+
+.menu-box {
+  width: 340px;
+  margin-left: 8%;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.menu-btn {
+  width: 100%; padding: 0.9rem 1rem;
+  font-size: 1.05rem; font-weight: 600;
+  background: #204aa8; color: #fff;
+  border: none; border-radius: 8px;
+  cursor: pointer; transition: background .15s;
+}
+.menu-btn:hover { background: #16377e; }
+
+.hero-footer {
+  position: fixed; inset: 0; pointer-events: none;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding: 0 1.2rem 0.8rem;
+  font-size: 0.8rem; color: #cbd5e1;
+}
+.hero-footer .center { margin: 0 auto; text-align: center; line-height: 1.25; }
+.hero-footer .icons  { display: flex; gap: 0.6rem; }
+
+.icon-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: #1f2329;
+  border: 1px solid #2d333b;
+  color: #cbd5e1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem;
+  pointer-events: auto; cursor: pointer;
+}
+.icon-btn:hover { background: #2d333b; }
+
+/* ========================================================================
+   SERVER-LIST  (Browse Public Servers)
+   ====================================================================== */
+body.server-layout {
+  overflow: hidden;
+  background: #0c0f13;
+}
+body.server-layout .topbar,
+body.server-layout .sidenav { display: none !important; }
+
+/* leichtes Overlay */
+body.server-layout::after {
+  content: ""; position: fixed; inset: 0;
+  background: rgba(0,0,0,.55); z-index: -1; pointer-events: none;
+}
+
+.server-container {
+  height: 100vh;
+  display: flex; flex-direction: column; gap: 1.2rem;
+  padding: 1.2rem 2.5rem;
+  box-sizing: border-box;
+  color: #cbd5e1;
+}
+
+/* ── Slider (Featured) ───────────────────────────────────── */
+.slider-inner {
+  display: flex; gap: 1rem;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  padding-bottom: 0.3rem;
+}
+.slider-inner::-webkit-scrollbar { display: none; }
+
+.slider-tile {
+  flex: 0 0 140px; height: 140px;
+  border-radius: 8px;
+  background: #2d333b url('../img/tile_placeholder.png') center / cover no-repeat;
+  color: #fff; font-weight: 600; font-size: 0.85rem;
+  display: flex; align-items: end; justify-content: center;
+  padding-bottom: .4rem;
+  scroll-snap-align: start;
+  cursor: pointer;
+}
+.slider-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #1f2329aa; border: none; color: #fff; cursor: pointer;
+}
+.slider-nav.left  { left: -16px; }
+.slider-nav.right { right: -16px; }
+
+/* ── Filter-Bar ──────────────────────────────────────────── */
+.filter-bar {
+  display: flex; gap: 1rem; align-items: center;
+}
+.filter-bar select,
+.filter-bar input {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+.filter-bar input { flex: 1; }
+
+.btn-secondary {
+  padding: 0.55rem 1.2rem;
+  background: #2d333b; color: #fff;
+  border: none; border-radius: 6px; cursor: pointer;
+}
+.btn-secondary:hover { background: #40464f; }
+
+/* ── Server-Cards ────────────────────────────────────────── */
+.srv-list {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 1rem;
+  padding-right: 0.2rem;
+}
+.srv-card {
+  display: flex; gap: 1rem;
+  padding: 0.8rem;
+  background: #1f2329;
+  border: 1px solid #2d333b;
+  border-radius: 8px;
+  color: #cbd5e1;
+  align-items: center;
+}
+.srv-card .thumb {
+  width: 96px; height: 64px;
+  background: #2d333b center / cover no-repeat;
+  border-radius: 4px;
+}
+.srv-card .meta { flex: 1; }
+.srv-card h3    { margin: 0 0 0.2rem 0; color: #fff; }
+.srv-card p     { margin: 0; font-size: 0.85rem; opacity: 0.8; }
+
+.actions { display: flex; gap: 0.5rem; }
+.actions .icon {
+  width: 40px; height: 40px;
+  border: none; border-radius: 6px;
+  background: #204aa8; color: #fff;
+  cursor: pointer;
+}
+.actions .icon:hover { background: #16377e; }
+.actions .ping { font-size: 0.8rem; padding: 0; }
+
+/* ── allgemeiner Seiten-Puffer unter dem fixen Header ────────── */
+/* ── allgemeiner Seiten-Puffer unter dem fixen Header ─────────────── */
+body.server-layout .server-container{
+  /* Headerhöhe (72) + 18 px Luft = 90 px */
+  padding-top: 90px;
+
+  /* exakt derselbe Innenabstand wie der Header-Block */
+  padding-left: 100px;
+  padding-right: 100px;
+
+  /* vertikaler Abstand zwischen den Sektionen */
+  display:flex; flex-direction:column; gap:1.2rem;
+
+  height:100vh;            /* Scroll innerhalb der Liste, nicht der Seite   */
+  box-sizing:border-box;
+  color:#cbd5e1;
+}
+
+/* Wenn du das auch für Settings, Avatar-Seite etc. willst,
+   gib den Haupt-Containern dort einfach die Klasse   page-wrap   und   */
+
+.page-wrap{
+  padding-top:90px;
+  padding-left:100px;
+  padding-right:100px;
+  box-sizing:border-box;
+}
+
+
+
+/* ───────────────────────────────────────────────────────────
+   GLOBAL HEADER
+   ────────────────────────────────────────────────────────── */
+.main-header{
+  position: fixed;
+  top: 0;
+  left: 100px;          /* Abstand links  */
+  right: 100px;         /* Abstand rechts */
+  height: 72px;
+
+  background: #15181c;
+  display: flex; align-items: center;
+  gap: 2rem;
+  padding: 0 40px;      /* inneres Polster; kannst du anpassen  */
+  box-sizing: border-box;
+  z-index: 1000;
+  border-radius: 8px;   /* optional – leichte Abrundung */
+}
+
+/* links: Logo + Titel */
+.brand{ display:flex; align-items:center; gap:0.7rem; }
+.hdr-logo { height:40px; }
+.hdr-title{ color:#fff; font-size:1.4rem; font-weight:600; }
+
+/* Mitte: Navigations-Buttons füllen gesamte Breite */
+.hdr-nav{
+  flex: 1;
+  display: flex; justify-content: center;
+  /* kein gap – Buttons schließen direkt an */
+}
+
+/* Buttons exakt so hoch wie Leiste; transparent Basis-Look */
+.nav-btn{
+  height: 72px;                    /* volle Header-Höhe  */
+  display: flex; align-items: center;
+  padding: 0 2.2rem;               /* horizontales Polster */
+  background: transparent;
+  color: #ffffff;
+  font-weight: 600; font-size: 0.85rem; letter-spacing: .4px;
+  border: none; border-radius: 0;  /* bündig mit Header */
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+
+/* Hover – leicht aufhellen */
+.nav-btn:hover{
+  background: rgba(255,255,255,.07);
+}
+
+/* Aktive Seite – Text gold */
+.nav-btn.active{
+  color: #ffd85a;
+}
+
+/* rechts: Icons + Avatar */
+.user-box{
+  display:flex; align-items:center; gap:0.8rem;
+  position:relative;
+}
+.user-avatar{
+  width:56px; height:56px;
+  border-radius:50%;
+  border:3px solid #15181c;
+  position:relative; top:8px;   /* Avatar ragt leicht nach unten */
+  background:#2d333b;
+}
+
+/* ───────────────────────────────────────────────────────────
+   GLOBAL BACKGROUND  (für alle Seiten)
+   ────────────────────────────────────────────────────────── */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background:url('../img/bg_forest.png') center / cover no-repeat;
+  z-index:-3;                       /* hinter allen Overlays */
+}
+
+/* das dunkle Overlay der Server-Liste bleibt darüber */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── generischer Seiten-Wrap  (falls noch nicht drin) ───────── */
+.page-wrap{
+  padding-top: 90px;          /* Platz unter Header */
+  padding-left: 100px;
+  padding-right: 100px;
+  box-sizing: border-box;
+}
+/* ───── Page-Wrap greift bereits (90px Top + 100px Seiten) ─── */
+
+/* Card */
+.settings-card{
+  max-width: 680px;
+  background:#1f2329;
+  border:1px solid #2d333b; border-radius:10px;
+  padding:1.8rem 2.2rem; color:#cbd5e1;
+}
+
+/* Tabs */
+.settings-tabs{
+  display:flex; gap:0; margin:-1.2rem -2.2rem 1.2rem;
+  border-bottom:1px solid #2d333b;
+}
+.tab-btn{
+  flex:1; padding:1rem; background:#15181c; color:#cbd5e1;
+  border:none; cursor:pointer; font-weight:600; font-size:0.8rem;
+  transition:background .15s, color .15s;
+}
+.tab-btn:not(.active):hover{ background:#1f2329; }
+.tab-btn.active{
+  background:#204aa8; color:#fff;
+}
+
+/* Panels */
+.tab-panel.hidden{ display:none; }
+
+/* Felder */
+.field{ display:flex; flex-direction:column; gap:.3rem; margin-bottom:1rem; }
+.settings-card select,
+.settings-card input[type="text"],
+.settings-card input[type="email"]{
+  padding:.55rem .8rem; border-radius:6px; border:1px solid #2d333b;
+  background:#2d333b; color:#fff;
+}
+.hint{ font-size:0.75rem; opacity:.6; }
+
+/* Switch */
+.switch{ position:relative; display:inline-block; width:48px; height:24px; }
+.switch input{ opacity:0; width:0; height:0; }
+.slider{ position:absolute; inset:0; background:#6b7280; border-radius:24px; transition:.2s; }
+.slider:before{ content:""; position:absolute; height:18px; width:18px; left:3px; top:3px; border-radius:50%; background:#fff; transition:.2s; }
+input:checked + .slider{ background:#22c55e; }
+input:checked + .slider:before{ transform:translateX(24px); }
+
+/* Save Button */
+.save-btn{ margin-top:1rem; }
+
+
+
+
+
+
+
+
+
+
+/* ── Home Dashboard Grid ─────────────────────────────────────────── */
+.home-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.4rem 1.6rem;
+}
+
+/* Karten */
+.card{
+  background:#1f2329;
+  border:1px solid #2d333b;
+  border-radius:10px;
+  padding:1.4rem 1.8rem;
+  color:#cbd5e1;
+}
+.card h2, .card h3{ color:#fff; margin-top:0; }
+.card p { margin:0.6rem 0 1rem; }
+.card ul{ margin:0; padding-left:1.2rem; }
+
+/* Größere Blöcke (Quick Play + Featured) */
+.card-lg{ grid-row: span 2; }
+
+/* Featured Thumbnail Platzhalter */
+.feat-thumb{
+  width:100%; height:140px;
+  background:#2d333b url('../img/feat_placeholder.jpg') center/cover no-repeat;
+  border-radius:6px; margin-bottom:0.8rem;
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary{
+  padding:0.7rem 1.4rem;
+  border:none; border-radius:8px; font-weight:600;
+  cursor:pointer; transition:background .15s;
+}
+.btn-primary  { background:#204aa8; color:#fff; }
+.btn-secondary{ background:#2d333b; color:#fff; }
+.btn-primary:hover  { background:#16377e; }
+.btn-secondary:hover{ background:#40464f; }
+
+/* Patch list */
+.patch-list li{ margin-bottom:0.4rem; }
+.patch-list a{ color:#59b0ff; text-decoration:none; }
+.patch-list a:hover{ text-decoration:underline; }
+
+
+
+/* ───────────────────────────────────────────────────────────
+   Hyatlas · DARK-BLUE THEME  (Palette + Overrides)
+   ────────────────────────────────────────────────────────── */
+:root{
+  --bg-deep:      #0e1b2e;   /* tiefes Nachtblau */
+  --bg-dark:      #152643;   /* Karten / Header */
+  --bg-dark-lt:   #1a2f52;   /* Hover-Farbton */
+  --accent:       #2d6bff;   /* primärer Brand-Blau */
+  --accent-dim:   #244fd1;   /* Hover / aktiv */
+  --accent-gold:  #ffd85a;   /* Auswahl-Markierung */
+  --text-main:    #cbd5e1;
+  --text-heading: #ffffff;
+}
+
+/* Hintergrund überall dunkelblau statt schwarz */
+body{ background:var(--bg-deep); }
+
+/* globales Landschaftsbild bekommt einen blauen Schleier */
+body::before{
+  background:linear-gradient(
+              rgba(14,27,46,.85),
+              rgba(14,27,46,.85)
+            ),
+            url('../img/bg_forest.png') center/cover no-repeat;
+}
+
+/* Header */
+.main-header{
+  background:var(--bg-dark);
+  border:1px solid rgba(255,255,255,.05);
+}
+.nav-btn       { color:var(--text-main); }
+.nav-btn:hover { background:var(--bg-dark-lt); }
+.nav-btn.active{ color:var(--accent-gold); }
+
+.icon-btn{ background:var(--bg-dark); border-color:var(--bg-dark-lt); }
+.icon-btn:hover{ background:var(--bg-dark-lt); }
+
+/* Cards */
+.card, .settings-card, .srv-card{
+  background:var(--bg-dark);
+  border:1px solid var(--bg-dark-lt);
+  color:var(--text-main);
+}
+.card h2, .card h3,
+.settings-card h2, .settings-card h3,
+.srv-card h3{ color:var(--text-heading); }
+
+/* Buttons */
+.btn-primary{
+  background:var(--accent);
+  color:#fff;
+}
+.btn-primary:hover{ background:var(--accent-dim); }
+
+.btn-secondary{
+  background:var(--bg-dark-lt);
+  color:#fff;
+}
+.btn-secondary:hover{ background:var(--accent-dim); }
+
+/* Slider-Tiles & Thumbnails */
+.slider-tile ,
+.srv-card .thumb,
+.feat-thumb{
+  background-color:var(--bg-dark-lt);
+}
+
+/* Patch-List Links */
+.patch-list a{ color:#7fb2ff; }
+.patch-list a:hover{ color:#b6d0ff; }
+
+
+
+
+
+
+
+
+/* ── Cards im Adventure-Bereich ─────────────────────────── */
+.create-card, .worlds-card{ background:var(--bg-dark); border:1px solid var(--bg-dark-lt); border-radius:10px; padding:1.6rem 2rem; color:var(--text-main); }
+.create-card h2, .worlds-card h2{ color:var(--text-heading); margin-top:0; }
+
+.field{ display:flex; flex-direction:column; gap:.25rem; margin-bottom:1rem; }
+.radio-group{ display:flex; gap:2rem; align-items:center; margin:1rem 0 2rem; }
+.radio-group label{ display:flex; gap:.3rem; align-items:center; }
+
+/* World Grid */
+.world-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap:1rem;
+  margin-top:1rem;
+}
+.world-card{
+  background:var(--bg-dark-lt); border-radius:8px; padding:1rem 1.2rem;
+  display:flex; flex-direction:column; gap:.4rem;
+}
+.world-card h3{ margin:0; color:var(--text-heading); }
+.world-card .meta{ font-size:0.8rem; opacity:.7; margin:0 0 .6rem; }
+
+/* Card Buttons */
+.wc-actions{ display:flex; gap:.5rem; margin-top:auto; }
+.wc-actions .icon{
+  width:36px; height:36px; border:none; border-radius:6px;
+  background:var(--accent); color:#fff; cursor:pointer;
+}
+.wc-actions .icon:disabled{ opacity:.4; cursor:not-allowed; }
+.wc-actions .icon:hover:not(:disabled){ background:var(--accent-dim); }
+
+
+
+
+
+
+
+
+
+
+/* ───────────────────────────────────────────────────────────
+   AVATAR CREATOR
+   ────────────────────────────────────────────────────────── */
+.avatar-wrap{
+  height:100vh;
+  display:grid;
+  grid-template-columns: 400px 1fr;
+  gap:1.6rem;
+  padding:96px 100px 1.6rem;          /* 96 = Headerhöhe + Abstand */
+  box-sizing:border-box;
+}
+
+/* LEFT ─ Editor-Pane */
+.editor-pane{
+  background:var(--bg-dark);
+  border:1px solid var(--bg-dark-lt);
+  border-radius:10px;
+  display:flex; flex-direction:column;
+  overflow:hidden;
+}
+
+/* vertikale Tabs */
+.part-tabs{
+  display:flex; flex-direction:column; gap:.4rem;
+  padding:1rem .6rem; background:var(--bg-dark-lt);
+}
+.part-tabs button{
+  width:40px; height:40px; border:none; border-radius:6px;
+  background:#2d333b url('../img/icon_leg.png') center/60% no-repeat;
+  cursor:pointer; opacity:.7;
+}
+.part-tabs button.active,
+.part-tabs button:hover{ opacity:1; background-color:var(--accent); }
+
+/* Platzhalter-Icons pro Kategorie (einfach austauschen) */
+.part-tabs [data-part=head]  { background-image:url('../img/icon_head.png'); }
+.part-tabs [data-part=body]  { background-image:url('../img/icon_body.png'); }
+.part-tabs [data-part=legs]  { background-image:url('../img/icon_leg.png');  }
+.part-tabs [data-part=feet]  { background-image:url('../img/icon_boot.png'); }
+.part-tabs [data-part=color] { background-image:url('../img/icon_color.png');}
+
+/* Gallery */
+.gallery{
+  flex:1; padding:1rem;
+  display:grid;
+  grid-template-columns:repeat(auto-fill, 88px);
+  grid-auto-rows:88px;
+  gap:.8rem; overflow-y:auto;
+}
+.gallery .item{
+  background:#2d333b center/cover no-repeat;
+  border:2px solid transparent; border-radius:6px; cursor:pointer;
+}
+.gallery .item:hover{ border-color:var(--accent); }
+.gallery .item.selected{ border-color:var(--accent-gold); }
+
+/* Farbpunkt-Bar */
+.color-bar{
+  display:flex; flex-wrap:wrap; gap:.5rem; padding:1rem;
+  background:var(--bg-dark-lt);
+}
+.color-dot{
+  width:24px; height:24px; border-radius:50%;
+  cursor:pointer; border:2px solid transparent;
+}
+.color-dot.selected{ border-color:var(--accent-gold); }
+
+/* Tools (Undo/Redo …) */
+.editor-tools{
+  display:flex; gap:.6rem; justify-content:flex-end;
+  padding:.8rem 1rem;
+}
+.editor-tools button{
+  width:36px; height:36px; border:none; border-radius:6px;
+  background:var(--bg-dark-lt); color:#fff; cursor:pointer;
+}
+.editor-tools button:hover{ background:var(--accent-dim); }
+
+/* RIGHT ─ 3-D Preview */
+.preview-pane{
+  position:relative; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  background:rgba(0,0,0,.3);         /* leichter Overlay für Kontrast */
+  border-radius:10px; overflow:hidden;
+}
+#avatar-canvas{ width:100%; height:100%; }
+
+/* Save / Cancel */
+.action-row{
+  position:absolute; bottom:1.6rem; right:1.6rem;
+  display:flex; gap:1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ───────────────────────────────────────────────────────────
+   HOME — Continue Card
+   ────────────────────────────────────────────────────────── */
+.continue-wrap{
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%, -50%);
+  pointer-events:none;                 /* schützt vor Hover-Overlay hinten */
+}
+
+.continue-card{
+  width:420px;
+  background:rgba(21,24,28,.88);
+  border:2px solid var(--accent);
+  border-radius:12px;
+  padding:1.4rem 1.6rem;
+  text-align:center;
+  display:flex; flex-direction:column; gap:1rem;
+  pointer-events:auto;                 /* Button bleibt klickbar */
+  box-shadow:0 6px 14px rgba(0,0,0,.45);
+}
+
+.cont-thumb{
+  width:100%; height:200px;
+  object-fit:cover;
+  border-radius:6px;
+  border:1px solid var(--bg-dark-lt);
+}
+
+.continue-card h2     { margin:0; color:#fff; font-size:1.3rem; }
+.continue-card p      { margin:0; color:#cbd5e1; font-size:.9rem; }
+
+#btn-continue{
+  width:100%; padding:.75rem 0;
+  font-size:1rem; font-weight:600;
+}
+
+
+
+
+
+
+/* ───────────────────────────────────────────────────────────
+   LOGIN / AUTH LAYOUT
+   ────────────────────────────────────────────────────────── */
+body.auth-layout .main-header,
+body.auth-layout .site-footer{ display:none!important; }
+
+/* Ansicht komplett vertikal zentrieren */
+.auth-shell{
+  height:100vh; display:flex; align-items:center; justify-content:center;
+}
+
+/* Logo + Formular bleiben wie gehabt */
+
+
+
+
+
+
+/* ── Login-Links färben ───────────────────────────────────── */
+.auth-wrapper .helper,
+.auth-wrapper h2{ color:#ffffff; }   /* Titel „Anmelden“ in Weiß */
+.auth-wrapper .switcher{
+  color:#ffffff;                 /* „Noch kein Account?“ in Weiß */
+}
+
+.auth-wrapper .helper a,
+.auth-wrapper .switcher a{
+  color:var(--accent);           /* gleiches Blau wie Buttons */
+  text-decoration:none;
+}
+.auth-wrapper .helper a:hover,
+.auth-wrapper .switcher a:hover{
+  color:var(--accent-dim);       /* dunkleres Blau bei Hover */
+}
+
+
+
+/* ── Slider: mehr Platz, Maus-Scroll → horizontales Schieben ───────── */
+.slider-inner{
+  gap:1.2rem;            /* größerer Abstand */
+  scroll-behavior:smooth;
+}
+.slider-inner:active{ cursor:grabbing; }
+.slider-inner::-webkit-scrollbar{ height:6px; }
+.slider-inner::-webkit-scrollbar-thumb{
+  background:#2d333b; border-radius:3px;
+}
+
+/* ── Filter-Row als abgesetzte Leiste ─────────────────── */
+.filter-row{
+  background:#0f131a; border:1px solid #1f2329;
+  padding:.6rem .9rem; border-radius:8px;
+  display:flex; align-items:center; gap:1rem;
+}
+.filter-row input{
+  flex:1; padding:.55rem .8rem;
+  border-radius:6px; border:1px solid #cbd5e1;
+  max-width:440px;
+}
+
+/* Channel-Buttons */
+.chan-group{ display:flex; gap:.6rem; }
+.chan-btn{
+  padding:.45rem 1rem; font-size:.75rem; font-weight:600;
+  background:transparent; border:none; color:#cbd5e1;
+  border-radius:6px; cursor:pointer; transition:.15s;
+}
+.chan-btn:hover{ background:#1f2329; }
+.chan-btn.active{ color:#ffd85a; }
+
+/* ── Server-Cards dichter & größerer Thumb ─────────────── */
+.srv-card{ gap:1.4rem; padding:1rem .9rem; }
+.srv-card+.srv-card{ margin-top:.6rem; }   /* kleiner Abstand */
+.srv-card .thumb{
+  width:128px; height:86px;               /* größer */
+}
+
+
+
+
+
+
+
+
+
+
+/* ========================================================================
+   LOADING SCREEN
+   ====================================================================== */
+body.loading-layout           { overflow:hidden; }
+
+body.loading-layout .main-header,
+body.loading-layout .hero-footer { display:none !important; }
+
+.loading-wrapper{
+  position:fixed; inset:0;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  gap:1.4rem;
+  text-align:center;
+  color:#ffffff;
+}
+
+.load-logo{ width:320px; max-width:60vw; }
+
+#load-title{ margin:0; font-size:1.3rem; font-weight:600; }
+
+.progress-bar{
+  width:60%; max-width:480px;
+  height:14px;
+  background:rgba(255,255,255,.15);
+  border-radius:7px;
+  overflow:hidden;
+}
+.progress{ height:100%;
+           width:0;
+           background:#3b82f6;           /* Blau */
+           transition:width .25s ease; }
+
+.abort-btn{
+  padding:.65rem 2.2rem;
+  font-weight:600;
+  background:#c0392b;
+  border:none; border-radius:6px;
+  color:#fff; cursor:pointer;
+}
+.abort-btn:hover{ background:#a52d20; }
+
+
+
+
+
+
+
+/* ───────── Logo-Größen anpassen ───────── */
+
+/* Header (globale Top-Leiste) */
+.main-header .hdr-logo {
+  height: 72px;      /* vorher z. B. 40 px */
+  width:  auto;      /* Seitenverhältnis bewahren */
+}
+
+/* Login-Seite */
+.auth-logo {
+  width: 150px;      /* oder `height: 120px;` – nach Geschmack */
+  max-width: 50%;    /* verhindert Überbreite auf kleinen Screens */
+  margin-bottom: 2rem;
+}
+
+/* Optionale Feinjustierung: Brand-Titel vertikal zentriert */
+.main-header .brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;      /* Abstand Logo ↔ Text */
+}
+
+.hdr-title {
+  font-size: 1.75rem;  /* etwas größer, passend zum Logo */
+  line-height: 1;
+}
+/* ───────── Login-Block etwas höher platzieren ───────── */
+
+/* Die Hülle (zentriert aktuell vertikal+horizontal) */
+.auth-shell{
+  display:flex;               /* bleibt Flex-Layout */
+  justify-content:center;     /* horizontal mittig */
+  align-items:flex-start;     /* NICHT mehr vertikal zentriert,
+                                 sondern oben beginnen */
+  min-height:100vh;           /* voller Viewport */
+  padding-top:6vh;            /* Abstand von oben (anpassen!) */
+  box-sizing:border-box;
+}
+
+/* Falls du stattdessen NUR die Box verschieben willst,
+   kannst du alternativ das hier nehmen: */
+/*
+.auth-wrapper{
+  transform:translateY(-40px);   // 40 px hochschieben
+}
+*/
+
+/* Auf sehr kleinen Höhen (<600 px) wieder zentrieren,
+   damit nichts abgeschnitten wird */
+@media (max-height: 600px){
+  .auth-shell{
+    align-items:center;       /* wieder vertikal mittig */
+    padding-top:0;
+  }
+}
+
+
+
+/* ───────── Login: Titel & Formular nach oben ───────── */
+
+.auth-wrapper{
+  transform:translateY(-40px);     /* ALLES 40 px hochschieben */
+}
+
+/* Logo wieder zurückholen – bleibt, wo es vorher war */
+.auth-wrapper .auth-logo{
+  display:block;                   /* sicherheitshalber */
+  transform:translateY(40px);      /* genau entgegengesetzt */
+}
+
+/* Auf sehr kleinen Höhen wieder normal zentrieren,
+   damit nichts abgeschnitten wird */
+@media (max-height:600px){
+  .auth-wrapper{
+    transform:none;
+  }
+  .auth-wrapper .auth-logo{
+    transform:none;
+  }
+}
+/* ───────── Login-Layout feinjustieren ───────── */
+
+/* Logo bleibt zentriert, rückt die Folgebereiche aber 32 px näher heran */
+.auth-logo{
+  display:block;          /* zentriert mit margin:auto */
+  margin:0 auto -32px;    /* letzter Wert: NEGATIVES bottom-Margin   ↑
+                             ↳ anpassen (-20 … -40 px), bis es perfekt sitzt */
+  max-width:150px;        /* falls du eine feste Breite nutzt */
+}
+
+/* Optionale Sicherheit: alles zentriert ausrichten */
+.auth-wrapper{
+  text-align:center;
+}
+
+/* Extrem kleine Fensterhöhen (<600 px): Abstand wieder neutralisieren,
+   damit nichts abgeschnitten wird. */
+@media (max-height:600px){
+  .auth-logo{ margin-bottom:0; }
+}
+
+
+/* Logo: nur leichtes Hochziehen */
+.auth-logo{
+  margin:0 auto 30px;
+}
+
+/* ggf. Formulareingaben noch etwas anheben – optional */
+#auth-form{
+  margin-top: 4px;          /* Feintuning, kannst du löschen/ändern */
+}
+
+
+/* ───────── Header Icons ───────── */
+.icon-btn{
+  position:relative;
+  background:none;
+  border:none;
+  color:#d0d8f0;
+  font-size:1.1rem;
+  padding:0.4rem 0.6rem;
+  cursor:pointer;
+}
+
+.icon-btn:hover{ color:#fff; }
+
+/* Badge für Freundezahl */
+.friends-btn .badge{
+  position:absolute;
+  top:2px;
+  right:2px;
+  min-width:17px;
+  height:17px;
+  padding:0 4px;
+  border-radius:50%;
+  background:#2db1ff;
+  color:#fff;
+  font-size:0.65rem;
+  line-height:17px;
+  text-align:center;
+  pointer-events:none;
+}
+
+/* ───────── Avatar + Dropdown ───────── */
+.avatar-wrapper{ position:relative; }
+
+.user-avatar{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  cursor:pointer;
+  transition:filter .2s;
+}
+
+.user-avatar:hover{ filter:brightness(1.15); }
+
+.avatar-menu{
+  display:none;             /* per JS ein-/ausblenden */
+  position:absolute;
+  right:0;
+  top:110%;
+  background:#1e253b;
+  border:1px solid #334;
+  border-radius:6px;
+  padding:0.3rem 0;
+  list-style:none;
+  min-width:140px;
+  z-index:50;
+}
+
+.avatar-menu li a{
+  display:block;
+  padding:0.5rem 1rem;
+  color:#d0d8f0;
+  text-decoration:none;
+  white-space:nowrap;
+}
+
+.avatar-menu li a:hover{
+  background:#2d3654;
+  color:#fff;
+}
+/* ───────── Header-Grundhöhe etwas erhöhen ───────── */
+.main-header{
+  height:72px;          /* vorher ~56 px */
+  display:flex;
+  align-items:center;   /* vertikal zentriert */
+}
+
+/* ───────── Avatar größer + Überhang ───────── */
+.avatar-wrapper{ position:relative; }
+
+.user-avatar{
+  width:60px;           /* ✱ doppelt so groß */
+  height:60px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #1c2035;
+  background:#2e334c;
+  cursor:pointer;
+  /* 10 px in die Leiste „hineinhängen” */
+  margin-top:-10px;     /* Überhang nach unten */
+  transition:filter .2s;
+}
+
+.user-avatar:hover{ filter:brightness(1.15); }
+
+/* ───────── Dropdown-Position passend zum größeren Avatar ───────── */
+.avatar-menu{
+  display:none;
+  position:absolute;
+  right:0;
+  top:calc(100% + 8px);   /* 8 px Abstand unter dem Avatar */
+  background:#1e253b;
+  border:1px solid #334;
+  border-radius:6px;
+  padding:.3rem 0;
+  min-width:140px;
+  z-index:99;
+}
+.avatar-menu li a{ display:block;padding:.5rem 1rem;color:#d0d8f0;text-decoration:none; }
+.avatar-menu li a:hover{ background:#2d3654;color:#fff; }
+
+
+/* ───── Filter-Zeile: Buttons links, Suche mittig, Refresh ganz rechts ───── */
+.filter-row{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+}
+
+.chan-group{ display:flex; gap:.6rem; }
+
+#srv-search{
+  flex:1 1 320px;          /* nimmt den ganzen „Restplatz“ ein     */
+  max-width:480px;         /* aber nicht breiter als …             */
+  padding:.55rem .9rem;
+  border-radius:4px;
+  border:1px solid #334;
+  background:#0d1324;
+  color:#d0d8f0;
+}
+
+#refresh-btn{ flex:0 0 auto; }
+
+/* je nach Klassenname deiner Cards – hier Beispiel ".srv-card" */
+.srv-list .srv-card{ margin-bottom:0; }     /* bisherigen Abstand killen */
+
+.srv-card .srv-title{                         /* ggf. „h3“, prüfen! */
+  color:#d4af37;               /* Gold-Ton   */
+  font-weight:600;
+}
+
+/* ───────── Server-Card Re-Layout ───────── */
+
+/* 1) Cards lückenlos (entfernt Restabstand) */
+.srv-list{display:flex;flex-direction:column;gap:0;}
+.srv-card{margin:0;padding:0;display:flex;align-items:center;}
+
+/* 2) Vorschaubild links ohne Rand & größer */
+.srv-card .thumb{
+  flex:0 0 104px;          /* Breite anpassen (Bild wird höher) */
+  height:100%;
+  margin:0;                /* kein Innenabstand */
+  border-top-left-radius:4px;
+  border-bottom-left-radius:4px;
+  background:#1a2438;      /* Fallback-Farbe, falls Bild fehlt */
+}
+
+/* 3) Titel goldfarben */
+.srv-title{color:#d4af37;font-weight:600;margin:0 0 4px;}
+
+/* 4) Actions rechtsbündig, horizontale Anordnung */
+.srv-actions{
+  margin-left:auto;        /* schiebt Block ganz nach rechts */
+  display:flex;
+  align-items:center;
+  gap:1.2rem;
+}
+
+/* 4a) Spieler-Icon groß + Zahl darunter */
+.player-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-width:48px;          /* sorgt für etwas Abstand */
+  font-size:.9rem;
+  color:#d0d8f0;
+}
+.player-box .fa-user{
+  font-size:1.6rem;
+  margin-bottom:2px;
+}
+
+/* 4b) Play-Button größer */
+.play-btn{
+  width:42px;height:42px;
+  border:none;border-radius:6px;
+  background:#2465ff;color:#fff;
+  font-size:1.2rem;cursor:pointer;
+  transition:background .15s;
+}
+.play-btn:hover{background:#3c79ff;}
+
+/* 4c) Ping-Balken deutlicher */
+.ping-bars{display:flex;align-items:flex-end;height:24px;}
+.ping-bars span{width:6px;margin:1px;}
+
+/* 5) Abstand unten zwischen Cards ebenfalls entfernen */
+.srv-card + .srv-card{border-top:8px solid transparent;margin-top:0;}
+
+
+
+
+/* ────────────────────────────────────────────────
+   ► 1. Card-Größe: ~75 % höher
+   ──────────────────────────────────────────────── */
+.srv-card{
+  min-height:140px;             /* vorher ~80 px  →  jetzt 75 % größer */
+  padding:1.2rem 0;             /* vertikaler Innenabstand */
+}
+
+/* Vorschaubild passt sich automatisch an der neuen Höhe an */
+.srv-card .thumb{
+  flex:0 0 150px;               /* Breite an neue Höhe anlehnen          */
+  height:100%;
+}
+
+/* ────────────────────────────────────────────────
+   ► 2. Actions rechtsbündig, zentriert & Luft zum Rand
+   ──────────────────────────────────────────────── */
+.srv-actions{
+  margin-left:auto;             /* schiebt Block an den rechten Rand     */
+  padding-right:14px;           /* Luft zur Kartenkante                  */
+  display:flex;
+  align-items:center;           /* vertikal zentriert in höherer Karte   */
+  gap:1.3rem;                   /* gleichmäßiger Abstand zwischen Icons  */
+}
+
+/* Spieler-Icon & Zahlen größer */
+.player-box{
+  min-width:58px;
+  font-size:1.05rem;            /* Zahl größer                           */
+}
+.player-box .fa-user{font-size:1.9rem;}
+
+/* Play-Button größer */
+.play-btn{
+  width:48px;height:48px;
+  font-size:1.35rem;
+}
+
+/* Ping-Balken etwas dicker / höher */
+.ping-bars{height:28px;}
+.ping-bars span{width:7px;}
+
+/* ────────────────────────────────────────────────
+   ► 3. Scrollbar-Styling  (Firefox + WebKit)
+   ──────────────────────────────────────────────── */
+.srv-list{
+  scrollbar-width:thin;                      /* Firefox */
+  scrollbar-color:#2465ff #101a2c;           /* thumb / track */
+}
+.srv-list::-webkit-scrollbar{
+  width:8px;                                 /* Chrome/Edge  */
+}
+.srv-list::-webkit-scrollbar-track{
+  background:#101a2c;
+  border-radius:4px;
+}
+.srv-list::-webkit-scrollbar-thumb{
+  background:#2465ff;
+  border-radius:4px;
+}
+.srv-list::-webkit-scrollbar-thumb:hover{
+  background:#3c79ff;
+}
+
+
+/* ───────── 1) Karten deutlich höher + Innenabstand ───────── */
+.srv-card{
+  min-height:110px;        /* vorher 140 → jetzt ca. +15 % */
+  padding:1.6rem 0;        /* vertikal mehr Raum */
+  display:flex;align-items:center;   /* Inhalt vertikal mittig */
+}
+
+/* Bild links füllt die Höhe weiter aus */
+.srv-card .thumb{
+  flex:0 0 170px;          /* Breite ein Stück mitwachsen lassen */
+  height:100%;
+}
+
+/* ───────── 2) Actions rechts – mit Luft + größerer Gap ───── */
+.srv-actions{
+  margin-left:auto;        /* Block ganz nach rechts */
+  padding-right:22px;      /* Abstand zur Kartenkante */
+  display:flex;
+  align-items:center;
+  gap:2rem;                /* mehr Platz zwischen Icons */
+}
+
+/* Spieler-Icon & Zahl noch größer */
+.player-box{
+  min-width:68px;
+  font-size:1.2rem;
+  text-align:center;
+}
+.player-box .fa-user{font-size:2rem;margin-bottom:4px;}
+
+/* Play-Button wächst mit */
+.play-btn{
+  width:52px;height:52px;
+  font-size:1.45rem;
+}
+
+/* Ping-Balken höher & dicker */
+.ping-bars{height:32px;}
+.ping-bars span{width:8px;margin:2px;}
+
+/* ───────── 3) Abstand zwischen den Karten ───────── */
+.srv-list{display:flex;flex-direction:column;gap:12px;}
+
+/* ───────── 4) (bleibt) Scrollbar im Theme-Stil ───── */
+/* liegt schon im vorigen Block; nichts weiter zu tun */
+
+
+/* ───────── Featured Worlds Grid ───────── */
+.world-gallery{margin-bottom:2.2rem;}
+
+.world-gallery h2{
+  margin:0 0 1rem;
+  font-size:1.4rem;
+  color:#f0f4ff;
+}
+
+.world-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:1rem;
+}
+
+.world-grid img{
+  width:100%;height:auto;
+  border-radius:6px;
+  object-fit:cover;
+  transition:transform .2s;
+}
+
+.world-grid img:hover{
+  transform:scale(1.05);
+}
+
+
+/* Nur in der Server-Ansicht: Overlay nicht mehr abdunkeln,
+   Bild bleibt erhalten, weil die background-image-Eigenschaft dort liegt. */
+body.server-layout::before{
+  opacity:1 !important;          /* volle Sichtbarkeit des Bildes          */
+  background-size:cover;         /* beibehaltener Bild-Stretch             */
+  background-position:center;    /* ggf. deinem Layout anpassen            */
+  filter:none !important;        /* keine Helligkeits-Absenkung            */
+}
+/* ───────── Avatar-Editor: Seitenleiste ───────── */
+.editor-pane{
+  width:415px;                     /* gleiche Breite wie Hytale-Vorbild   */
+  height:calc(100vh - 110px);      /* Headerhöhe abziehen                 */
+  display:flex;flex-direction:column;
+  background:#1f2b4a;
+  border-radius:6px;
+  overflow:hidden;                 /* Tabs sitzen exakt am Rand           */
+}
+
+/* Tabs – schmale Icon-Leiste links */
+.part-tabs{
+  width:52px;
+  background:#16203a;
+  display:flex;flex-direction:column;
+  align-items:center;
+  gap:.5rem;
+  padding:1rem 0;
+}
+.part-tabs button{
+  width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  border:none;border-radius:4px;
+  background:#223155;
+  color:#c0d0ff;
+  font-size:1.2rem;
+  cursor:pointer;
+  transition:background .15s, color .15s;
+}
+.part-tabs button:hover{background:#2c3f6b;}
+.part-tabs button.active{
+  background:#2465ff;
+  color:#fff;
+}
+
+/* Abschnittstitel */
+.editor-pane header{
+  padding:0.8rem 1rem .4rem 1rem;
+  border-bottom:1px solid #31416b;
+}
+.editor-pane h2{margin:0;font-size:1rem;color:#f0f4ff;}
+
+/* Galerie – 4×N Grid, eigenes Scroll-Bar-Theme  */
+.gallery{
+  flex:1;
+  padding:1rem .8rem;
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:.7rem;
+  overflow-y:auto;
+}
+.gallery .item{
+  width:100%;aspect-ratio:1/1;
+  background:#394b7a center/cover no-repeat;
+  border-radius:4px;
+  cursor:pointer;
+  transition:outline .1s;
+}
+.gallery .item.selected,
+.gallery .item:hover{
+  outline:3px solid #2465ff;
+}
+
+/*  farbige Punkte: mehr Zeilen, Hover-Ring */
+.color-bar{
+  padding:.8rem .8rem;
+  display:grid;
+  grid-template-columns:repeat(10, 1fr);
+  gap:.45rem;
+}
+.color-dot{
+  width:20px;height:20px;border-radius:50%;
+  cursor:pointer;
+  border:2px solid #1f2b4a;              /* Rand verschwindet auf dunklem BG */
+  transition:transform .1s,border .1s;
+}
+.color-dot:hover{transform:scale(1.15);}
+.color-dot.selected{border:2px solid #fff;}
+
+/* Undo / Redo / Options unten rechts   */
+.editor-tools{
+  margin:.4rem;
+  display:flex;justify-content:flex-end;gap:.5rem;
+}
+.editor-tools button{
+  width:32px;height:32px;
+  border:none;border-radius:4px;
+  background:#223155;
+  color:#c0d0ff;
+  font-size:1rem;cursor:pointer;
+}
+.editor-tools button:hover{background:#2c3f6b;}
+
+/* ───────── Seitenleiste als 2-Spalten-Grid ───────── */
+.editor-pane{
+  display:grid;                        /* statt flex/column   */
+  grid-template-columns:60px 1fr;      /* 60 px Tabs + Rest   */
+  grid-template-rows:auto 1fr auto auto;
+  /* Reihen: 1) Titel  2) Galerie  3) Farb-Bar  4) Tools */
+  height:calc(100vh - 110px);          /* bleibt wie gehabt   */
+}
+
+/* Tabs: volle Höhe links */
+.part-tabs{
+  grid-column:1 / 2;
+  grid-row:1 / 5;                      /* erstreckt sich über alle Zeilen */
+  height:100%;
+}
+
+/* Titel */
+.editor-pane > header{
+  grid-column:2;                       /* rechte Spalte */
+  grid-row:1;
+  padding:.8rem 1rem .4rem 1rem;
+}
+
+/* Galerie füllt den ganzen Zwischenraum bis zu den Farben */
+.gallery{
+  grid-column:2;
+  grid-row:2;                          /* Zeile nimmt 1fr → dehnt sich   */
+  overflow-y:auto;
+}
+
+/* Farbleiste direkt unter der Galerie */
+.color-bar{
+  grid-column:2;
+  grid-row:3;
+}
+
+/* Undo/Redo/Options ganz unten rechts */
+.editor-tools{
+  grid-column:2;
+  grid-row:4;
+  margin:.6rem;
+  display:flex;justify-content:flex-end;gap:.6rem;
+}
+
+/* ───────── Buttons zentriert im Preview-Bereich ───────── */
+
+.preview-pane{
+  position:relative;           /* Referenz für absolute Positionierung   */
+}
+
+.preview-pane .action-row{
+  position:absolute;
+  bottom:24px;                 /* Abstand vom unteren Rand (anpassen)    */
+  left:50%;                    /* horizontal mittig                      */
+  transform:translateX(-50%);
+  display:flex;
+  gap:1.2rem;                  /* Abstand zwischen Cancel & Save         */
+}
+/* ───────── Action-Buttons gleich breit ───────── */
+.preview-pane .action-row{
+  display:flex;              /* (bleibt) */
+  gap:1.2rem;
+  width:420px;               /* Gesamtbreite nach Wunsch               */
+  max-width:90vw;            /* schrumpft auf kleineren Fenstern       */
+  position:absolute;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+/* beide Buttons nehmen identisch viel Platz ein */
+.preview-pane .action-row button{
+  flex:1 1 0;                /* gleicher Anteil, gleiche Breite        */
+  min-width:120px;           /* Untergrenze, falls Fenster sehr schmal */
+}
+
+
+
+
+/* ───────── Settings Card ───────── */
+.settings-card{
+  width:520px;                       /* etwas breiter                     */
+  margin:4rem auto;
+  background:rgba(31,43,74,.9);      /* halbtransparent + Blur            */
+  backdrop-filter:blur(6px);
+  border-radius:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+  overflow:hidden;
+  animation:fadeIn .4s ease;
+}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;}}
+
+/* ───── Tabs ───── */
+.settings-tabs{
+  display:flex;
+  background:#141b31;
+}
+.tab-btn{
+  flex:1;
+  padding:.85rem 0;
+  background:none;
+  border:none;
+  color:#c8d4ff;
+  font-size:1.1rem;
+  cursor:pointer;
+  position:relative;
+  transition:color .15s;
+}
+.tab-btn:hover{color:#fff;}
+.tab-btn.active{
+  color:#fff;
+}
+.tab-btn.active::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:0;
+  width:100%;height:4px;
+  background:#2465ff;               /* leuchtend blau                     */
+  box-shadow:0 0 6px #2465ff;
+}
+
+/* ───── Form Felder ───── */
+.tab-panel{
+  padding:2rem 2.2rem 1.6rem;
+  display:none;
+  animation:tabfade .2s ease;
+}
+@keyframes tabfade{from{opacity:0;}to{opacity:1;}}
+.tab-panel:not(.hidden){display:block;}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:.4rem;
+  margin-bottom:1.4rem;
+}
+.field label{color:#f0f4ff;font-size:.9rem;}
+.field select,
+.field input[type="text"],
+.field input[type="email"]{
+  padding:.6rem .75rem;
+  background:#202a45;
+  color:#dfe7ff;
+  border:1px solid #384a70;
+  border-radius:4px;
+  font-size:.9rem;
+}
+.field select:focus,
+.field input:focus{outline:2px solid #2465ff;}
+
+.hint{color:#8696c6;font-size:.75rem;margin-top:.2rem;}
+
+/* Switch Feld */
+.switch-field{
+  flex-direction:row;align-items:center;gap:1rem;
+}
+.switch{
+  position:relative;display:inline-block;width:44px;height:24px;
+}
+.switch input{opacity:0;width:0;height:0;}
+.slider{
+  position:absolute;cursor:pointer;inset:0;
+  background:#3a4d7b;border-radius:24px;transition:.2s;
+}
+.slider::before{
+  content:"";position:absolute;height:18px;width:18px;
+  left:3px;top:3px;background:#c8d4ff;border-radius:50%;transition:.2s;
+}
+.switch input:checked + .slider{background:#2ecc71;}
+.switch input:checked + .slider::before{transform:translateX(20px);}
+
+/* ───── Save-Button ───── */
+.save-btn{
+  display:block;
+  width:100%;
+  margin:1.2rem 0 .4rem;
+  padding:.8rem 0;
+  font-size:1rem;
+}
+
+/* ───── Scrollbar in Panels ───── */
+.tab-panel::-webkit-scrollbar{width:6px;}
+.tab-panel::-webkit-scrollbar-thumb{background:#2465ff;border-radius:3px;}
+.tab-panel{scrollbar-width:thin;scrollbar-color:#2465ff transparent;}
+
+
+.logo-wrapper {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+}
+

@@ -1,0 +1,112 @@
+{% extends "modules/base_core.html" %}
+{% block body_class %}server-layout{% endblock %}
+
+{% block content %}
+<div class="page-wrap">
+
+  <!-- ── Create World Card ─────────────────────────────── -->
+  <section class="card create-card">
+    <h2>Create New World</h2>
+
+    <form id="create-form" autocomplete="off">
+      <div class="field">
+        <label for="world-name">World Name</label>
+        <input id="world-name" name="name" type="text"
+               placeholder="My Epic Realm" minlength="3" maxlength="32" required>
+      </div>
+
+      <div class="field">
+        <label for="seed">Seed&nbsp;<small>(optional)</small></label>
+        <input id="seed" name="seed" type="text" maxlength="64"
+               placeholder="leave empty for random">
+      </div>
+
+      <div class="radio-group">
+        <span>Visibility</span>
+        <label><input type="radio" name="visibility" value="local"  checked> Local</label>
+        <label><input type="radio" name="visibility" value="lan">    LAN</label>
+        <label><input type="radio" name="visibility" value="public"> Public</label>
+      </div>
+
+      <button class="btn-primary" type="submit">Create & Launch</button>
+      <p id="create-msg" class="msg"></p>
+    </form>
+  </section>
+
+  <!-- ── Existing Worlds — Grid ────────────────────────── -->
+  <section class="card worlds-card">
+    <h2>My Worlds</h2>
+
+    <div class="world-grid" id="world-grid">
+      <!-- Cards injected by JS -->
+    </div>
+
+    <p id="world-msg" class="msg"></p>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+/* ======= Demo-Backend / Platzhalter ================================= */
+const dummyWorlds = [
+  { id:1, name:"Skylands",    vis:"public", players:2, link:"skyl.io/abc123" },
+  { id:2, name:"LAN Party",   vis:"lan",    players:0, link:"192.168.0.5:4321" },
+  { id:3, name:"Solo Realm",  vis:"local",  players:1, link:"" }
+];
+
+/* ======= DOM Elements =============================================== */
+const form   = document.getElementById("create-form");
+const cMsg   = document.getElementById("create-msg");
+const grid   = document.getElementById("world-grid");
+const wMsg   = document.getElementById("world-msg");
+
+/* ======= Build World Card =========================================== */
+function buildCard(w){
+  const div = document.createElement("div");
+  div.className = "world-card";
+  div.innerHTML = `
+    <h3>${w.name}</h3>
+    <p class="meta">${w.vis.toUpperCase()} · ${w.players} player(s)</p>
+
+    <div class="wc-actions">
+      <button class="icon play"  title="Play"><i class="fa fa-play"></i></button>
+      <button class="icon link"  title="Copy Invite" ${w.link?'':'disabled'}>
+        <i class="fa fa-link"></i></button>
+      <button class="icon del"   title="Delete"><i class="fa fa-trash"></i></button>
+    </div>`;
+  /* Aktionen */
+  div.querySelector(".play").onclick = ()=> alert("Launching "+w.name);
+  div.querySelector(".del" ).onclick = ()=> alert("Delete "+w.name);
+  const linkBtn = div.querySelector(".link");
+  if(w.link){
+    linkBtn.onclick = ()=> navigator.clipboard.writeText(w.link)
+      .then(()=> linkBtn.title="Copied!");
+  }
+  return div;
+}
+
+/* ======= Load Worlds ================================================ */
+function loadWorlds(){
+  grid.innerHTML="";
+  dummyWorlds.forEach(w=> grid.appendChild(buildCard(w)));
+}
+loadWorlds();
+
+/* ======= Create World =============================================== */
+form.onsubmit = e=>{
+  e.preventDefault();
+  cMsg.textContent = "Creating world…";
+  const data = Object.fromEntries(new FormData(form).entries());
+  // Placeholder – push to local array
+  dummyWorlds.push({
+    id:Date.now(), name:data.name, vis:data.visibility,
+    players:0, link:data.visibility!=="local" ? "invite/"+Date.now() : ""
+  });
+  loadWorlds();
+  cMsg.textContent = "World created! Launching …";
+};
+</script>
+<script src="{{ url_for('static', path='js/header.js') }}"></script>
+{% endblock %}

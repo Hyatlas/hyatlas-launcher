@@ -1,0 +1,168 @@
+<!-- app/templates/pages/login.html -->
+{% extends "modules/base_core.html" %}
+
+{% block body_class %}auth-layout hero-layout{% endblock %}
+
+{% block content %}
+<div class="auth-shell">
+  <div class="logo-wrapper" style="margin-bottom: 3.5rem; text-align: center;">
+
+
+  <div class="auth-wrapper">
+    <img src="{{ url_for('static', path='img/logo.png') }}"
+         alt="Hyatlas" class="auth-logo" />
+
+
+
+
+    <h2 id="auth-title">Anmelden</h2>
+
+    <form id="auth-form" autocomplete="off">
+      <!-- Benutzername / E-Mail -->
+      <input name="username" id="user-input" type="text"
+             placeholder="E-Mail oder Benutzername"
+             minlength="3" maxlength="128" required />
+
+      <!-- Passwort (bei „Passwort vergessen“ ausgeblendet) -->
+      <input name="password" id="pw-input" type="password"
+             placeholder="••••••" minlength="4"
+             maxlength="128" required />
+
+      <button class="btn-primary" type="submit" id="auth-btn">
+        Anmelden
+      </button>
+
+      <!-- Helper-Links -->
+      <p class="helper" id="helper-paragraph">
+        <a href="#" id="forgot-link">Passwort&nbsp;vergessen?</a>
+      </p>
+
+      <p class="switcher" id="switcher-paragraph">
+        Noch kein Account?
+        <a href="#" id="toggle-link">Registrieren</a>
+      </p>
+    </form>
+
+    <p id="auth-msg" class="msg"></p>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+/* ───────────────────── DOM Refs ────────────────────────────── */
+const form        = document.getElementById("auth-form");
+const userInput   = document.getElementById("user-input");
+const pwInput     = document.getElementById("pw-input");
+
+const titleEl     = document.getElementById("auth-title");
+const btnEl       = document.getElementById("auth-btn");
+const msgEl       = document.getElementById("auth-msg");
+
+const toggleLnk   = document.getElementById("toggle-link");
+const switcherP   = document.getElementById("switcher-paragraph");
+const forgotLnk   = document.getElementById("forgot-link");
+const helperP     = document.getElementById("helper-paragraph");
+
+/* ───────────────────── State ───────────────────────────────── */
+let mode = "login";     //  login | register | forgot
+
+function setMode(newMode) {
+  mode = newMode;
+
+  /* Passwortfeld ein-/ausblenden */
+  const showPw = mode !== "forgot";
+  pwInput.style.display = showPw ? "" : "none";
+  pwInput.required      = showPw;
+
+  /* Titel + Hauptbutton */
+  if (mode === "login") {
+    titleEl.textContent = "Anmelden";
+    btnEl.textContent   = "Anmelden";
+    toggleLnk.textContent = "Registrieren";
+    forgotLnk.style.display = "";            // Link wieder sichtbar
+  } else if (mode === "register") {
+    titleEl.textContent = "Registrieren";
+    btnEl.textContent   = "Registrieren";
+    toggleLnk.textContent = "Schon angemeldet?";
+    forgotLnk.style.display = "";            // Link weiterhin sichtbar
+  } else {                                   // forgot
+    titleEl.textContent = "Passwort zurücksetzen";
+    btnEl.textContent   = "E-Mail senden";
+    forgotLnk.style.display = "none";        // Link ausblenden, weil aktiv
+  }
+
+  msgEl.textContent = "";
+}
+
+/* ───────────────────── Link-Handler ────────────────────────── */
+toggleLnk.addEventListener("click", e => {
+  e.preventDefault();
+  setMode(mode === "login" ? "register" : "login");
+});
+
+forgotLnk.addEventListener("click", e => {
+  e.preventDefault();
+  setMode("forgot");
+});
+
+/* ───────────────────── Submit-Handler ──────────────────────── */
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+
+  /* Endpoint & Payload je Modus */
+  let endpoint, payload;
+
+  if (mode === "login") {
+    msgEl.textContent = "Melde an …";
+    endpoint = "/api/login";
+    payload  = {
+      username: userInput.value.trim(),
+      password: pwInput.value
+    };
+  } else if (mode === "register") {
+    msgEl.textContent = "Registriere …";
+    endpoint = "/api/register";
+    payload  = {
+      username: userInput.value.trim(),
+      email:    userInput.value.trim(),
+      password: pwInput.value
+    };
+  } else {          // forgot
+    msgEl.textContent = "Sende Reset-Link …";
+    endpoint = "/api/password/forgot";
+    payload  = { email: userInput.value.trim() };
+  }
+
+  try {
+    const res = await fetch(endpoint, {
+      method : "POST",
+      headers: { "Content-Type": "application/json" },
+      body   : JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.detail || res.statusText || "Fehler");
+    }
+
+    if (mode === "forgot") {
+      msgEl.textContent = "E-Mail wurde gesendet.";
+      return;                              // fertig – nicht einloggen
+    }
+
+    // Erfolgreiches Login/Registration
+    if (window.pywebview?.api?.expand) {
+      await window.pywebview.api.expand();
+    } else {
+      window.location.href = "/";
+    }
+  } catch (err) {
+    msgEl.textContent = err.message ?? String(err);
+  }
+});
+
+/* ───────────────────── Init ────────────────────────────────── */
+setMode("login");
+</script>
+{% endblock %}

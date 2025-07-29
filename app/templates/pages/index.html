@@ -1,0 +1,46 @@
+{% extends "modules/base_core.html" %}
+{% block body_class %}hero-layout{% endblock %}
+
+{% block content %}
+<div class="continue-wrap">
+  <div class="continue-card">
+
+    {# -- Thumbnail (Fallback-Bild falls None) -- #}
+    <img
+      src="{{ last_server.thumbnail if last_server else url_for('static', path='img/placeholder_world.jpg') }}"
+      class="cont-thumb"
+      alt="World thumbnail" />
+
+    {# -- Titel + Description -- #}
+    <h2>{{ last_server.name if last_server else "Continue Adventure" }}</h2>
+    <p>
+      {{ last_server.desc if last_server
+         else "Jump back into the world you played last time." }}
+    </p>
+
+    {# -- PLAY-Button (deaktiviert, wenn es noch keine gespeicherte Welt gibt) -- #}
+    <button id="btn-continue"
+            class="btn-primary"
+            {% if not last_server %}disabled{% endif %}>
+      PLAY
+    </button>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+  const btn = document.getElementById("btn-continue");
+  if (btn && !btn.disabled) {
+    btn.onclick = () => {
+      // später: echte Game-Start-API
+      alert("Connecting to {{ last_server.name if last_server else '' }} …");
+    };
+  }
+</script>
+
+
+<script src="{{ url_for('static', path='js/header.js') }}"></script>
+{% endblock %}

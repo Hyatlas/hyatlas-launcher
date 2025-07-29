@@ -1,0 +1,59 @@
+{% extends "modules/base_core.html" %}
+
+{% block body_class %}loading-layout{% endblock %}
+
+{% block content %}
+<div class="loading-wrapper">
+  <img src="{{ url_for('static', path='img/logo.png') }}"
+       class="load-logo" alt="Hyatlas"/>
+
+  <!-- Was wird gerade erledigt -->
+  <p id="load-msg">Preparing world files …</p>
+
+  <!-- Fortschritt -->
+  <div class="progress-bar">
+    <div class="progress" id="progress-bar"></div>
+  </div>
+
+  <!-- Abbrechen -->
+  <button class="abort-btn" id="abort-btn">ABORT</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="{{ url_for('static', path='js/header.js') }}"></script>
+
+<script>
+/* ───────────── Loading-Screen Logic ─────────────────────── */
+const bar   = document.getElementById("progress-bar");
+const msgEl = document.getElementById("load-msg");
+
+/* Server-Info aus SessionStorage ziehen */
+const srvRaw = sessionStorage.getItem("pendingServer");
+if (srvRaw){
+  const srv = JSON.parse(srvRaw);
+  msgEl.textContent = "Connecting to " + srv.name + " …";
+}
+
+/* Fake-Progress */
+let p = 0;
+const timer = setInterval(() => {
+  p += Math.random() * 8;
+  if (p >= 100){
+    p = 100;
+    clearInterval(timer);
+    msgEl.textContent = "Launching game …";
+    // hier das eigentliche Spiel starten
+  }
+  bar.style.width = p + "%";
+}, 350);
+
+/* Abbrechen → zurück zur Serverliste */
+document.getElementById("abort-btn").onclick = () => {
+  clearInterval(timer);
+  window.location.href = "/servers";
+};
+</script>
+{% endblock %}

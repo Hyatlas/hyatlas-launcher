@@ -1,0 +1,79 @@
+{% extends "modules/base_core.html" %}
+
+{#  Klasse setzt das neue Layout & versteckt alte Leisten #}
+{% block body_class %}server-layout{% endblock %}
+
+{% block content %}
+<div class="server-container">
+
+  <!-- ---------- ❶ Featured Worlds (Grid) ----------------------------- -->
+  <section class="world-gallery">
+    <h2>Discover new Worlds and Adventures</h2>
+
+    <div class="world-grid">
+      <!-- 9 Vorschaubilder – Dateinamen anpassen -->
+      <img src="{{ url_for('static', path='img/server/server_1.png') }}"   alt="Hidden Vault">
+      <img src="{{ url_for('static', path='img/server/server_2.png') }}" alt="Excavation Site">
+      <img src="{{ url_for('static', path='img/server/server_3.png') }}"  alt="Dragon Inferno">
+      <img src="{{ url_for('static', path='img/server/server_4.png') }}"    alt="Sky Builders">
+      <img src="{{ url_for('static', path='img/server/server_5.png') }}"     alt="Crane Works">
+      <img src="{{ url_for('static', path='img/server/server_6.png') }}"      alt="Star Pilot">
+      <img src="{{ url_for('static', path='img/server/server_7.png') }}"    alt="Light Runner">
+      <img src="{{ url_for('static', path='img/server/server_8.png') }}"    alt="Boar Morning">
+      <img src="{{ url_for('static', path='img/server/server_9.png') }}"     alt="Boar Sunset">
+    </div>
+  </section>
+
+  <!-- ---------- ❷ Filter-Bar ------------------------------------------- -->
+  <section class="filter-row">
+  <div class="chan-group">
+    <button class="chan-btn active" data-val="">ALL</button>
+    <button class="chan-btn"          data-val="stable">ADVENTURE</button>
+    <button class="chan-btn"          data-val="beta">MINIGAME</button>
+    <button class="chan-btn"          data-val="nightly">CITYBUILD</button>
+  </div>
+
+  <input type="search" id="srv-search" placeholder="Search server …"/>
+  <button id="refresh-btn" class="btn-secondary">Refresh</button>
+</section>
+
+  <!-- ---------- ❸ Server-Card-List ------------------------------------- -->
+  <section class="srv-list" id="srv-list"></section>
+  <p id="srv-msg" class="msg"></p>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="{{ url_for('static', path='js/serverlist.js') }}"></script>
+<script src="{{ url_for('static', path='js/header.js') }}"></script>
+
+<script>
+/* Channel-Filter: Highlight & Dummy-Filter */
+document.querySelectorAll('.chan-btn').forEach(btn=>{
+  btn.onclick = () => {
+    document.querySelectorAll('.chan-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    // später echte Abfrage per ?channel=; aktuell nur visuelle Umschaltung
+  };
+});
+
+/* Slider – drag-to-scroll */
+const slider = document.getElementById('slider-inner');
+let isDown   = false, startX, scrollL;
+slider.addEventListener('mousedown', e=>{
+  isDown=true; startX=e.pageX-slider.offsetLeft; scrollL=slider.scrollLeft;
+});
+slider.addEventListener('mouseleave', ()=>isDown=false);
+slider.addEventListener('mouseup',   ()=>isDown=false);
+slider.addEventListener('mousemove', e=>{
+  if(!isDown)return;
+  e.preventDefault();
+  const walk=(e.pageX-slider.offsetLeft-startX)*1.2;
+  slider.scrollLeft=scrollL-walk;
+});
+</script>
+
+{% endblock %}

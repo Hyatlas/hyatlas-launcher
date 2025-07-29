@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Hyatlas – Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}"/>
+  <style>
+    /* Zentrierte Login-Maske */
+    body { display:flex; justify-content:center; align-items:center; height:100vh; }
+    .login-card { width:300px; }
+  </style>
+</head>
+<body>
+  {% block content %}{% endblock %}
+  <script src="{{ url_for('static', path='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
